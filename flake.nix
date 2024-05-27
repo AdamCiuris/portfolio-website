@@ -4,24 +4,24 @@
   };
   outputs = { self, nixpkgs, ... }@inputs: # @inputs let's us access the inputs anywhere in the file
     let 
-      pkgList = with pkgs;[
+      system = "x86_64-linux";
+      myPkgs = nixpkgs.legacyPackages.${system}; 
+      pkgList = with myPkgs;[
         python312
       ] ++
-      (with pkgs.python312Packages; [
+      (with myPkgs.python312Packages; [
         ipython
         django
         pandas
         numpy
       ]);
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      devShells.x86_64-linux.default = pkgs.mkShell {
+      devShells.x86_64-linux.default = myPkgs.mkShell {
         buildInputs = pkgList;
         shellHook = ''
           echo "You are in a ${system} shell with ${
-            pkgs.lib.concatStrings  # concatenate all strings in the list so they can be coerced to a single string
+            myPkgs.lib.concatStrings  # concatenate all strings in the list so they can be coerced to a single string
               (builtins.map(x: "\n" + x) pkgList) # prepend new line to each package name 
               }."
         '';
