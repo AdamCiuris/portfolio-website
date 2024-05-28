@@ -22,7 +22,7 @@
         shellHook = ''
           echo "You are in a ${system} shell with ${
             myPkgs.lib.concatStrings  # concatenate all strings in the list so they can be coerced to a single string
-              (builtins.map(x: "\n" + x) pkgList) # prepend new line to each package name 
+              (builtins.map(x: "\n flake: " + x) pkgList) # prepend new line to each package name 
               }."
         '';
       };
