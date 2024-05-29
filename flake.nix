@@ -12,6 +12,7 @@
       ] ++
       (with myPkgs.python312Packages; [
         ipython
+        gunicorn
         django
         pandas
         numpy
