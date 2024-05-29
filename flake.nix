@@ -8,6 +8,7 @@
       myPkgs = nixpkgs.legacyPackages.${system}; 
       pkgList = with myPkgs;[
         python312
+        nginx # reverse proxy, load balancer, and web server
       ] ++
       (with myPkgs.python312Packages; [
         ipython
